@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+
+{% block title %}Profile Setup - Neuro-Nav{% endblock %}
+
+{% block content %}
+<div class="min-h-screen py-12 px-4">
+    <div class="max-w-3xl mx-auto">
+        <div class="card p-8">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <div class="text-5xl mb-4">⚙️</div>
+                <h1 class="text-3xl font-bold mb-2 text-gray-900 dark:text-white">
+                    Customize Your Experience
+                </h1>
+                <p class="text-gray-600 dark:text-gray-400">
+                    Help us understand your preferences (you can change these anytime)
+                </p>
+            </div>
+            
+            <form id="profile-setup-form" class="space-y-8">
+                <!-- Sensory Sensitivities -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-gray-900 dark:text-white flex items-center">
+                        <i data-lucide="volume-2" class="w-5 h-5 mr-2 text-primary-teal"></i>
+                        Sensory Sensitivities
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                        Select what you'd like to avoid on your routes
+                    </p>
+                    
+                    <div class="space-y-3">
+                        <label class="flex items-center justify-between p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-primary-teal cursor-pointer transition-colors">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">🔊</span>
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">Loud Noises</p>
+                                    <p class="text-sm text-gray-500">Traffic, construction, sirens</p>
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" name="sensitivity-noise" value="noise">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </label>
+                        
+                        <label class="flex items-center justify-between p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-primary-teal cursor-pointer transition-colors">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">💡</span>
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">Bright/Flashing Lights</p>
+                                    <p class="text-sm text-gray-500">Neon signs, strobe lights</p>
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" name="sensitivity-lights" value="lights">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </label>
+                        
+                        <label class="flex items-center justify-between p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-primary-teal cursor-pointer transition-colors">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">👥</span>
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">Dense Crowds</p>
+                                    <p class="text-sm text-gray-500">Busy sidewalks, events</p>
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" name="sensitivity-crowds" value="crowds">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </label>
+                        
+                        <label class="flex items-center justify-between p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-primary-teal cursor-pointer transition-colors">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">👃</span>
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">Strong Smells</p>
+                                    <p class="text-sm text-gray-500">Restaurants, markets</p>
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" name="sensitivity-smells" value="smells">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </label>
+                        
+                        <label class="flex items-center justify-between p-4 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-primary-teal cursor-pointer transition-colors">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">🚧</span>
+                                <div>
+                                    <p class="font-medium text-gray-900 dark:text-white">Construction Sites</p>
+                                    <p class="text-sm text-gray-500">Loud machinery, debris</p>
+                                </div>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" name="sensitivity-construction" value="construction">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Preferred Safe Havens -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-gray-900 dark:text-white flex items-center">
+                        <i data-lucide="map-pin" class="w-5 h-5 mr-2 text-primary-teal"></i>
+                        Preferred Safe Havens
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                        What types of places help you feel calm?
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="haven-option">
+                            <input type="checkbox" name="haven-parks" value="parks" class="hidden haven-checkbox">
+                            <div class="haven-card-select">
+                                <span class="text-3xl mb-2">🌳</span>
+                                <p class="font-medium text-gray-900 dark:text-white">Parks</p>
+                            </div>
+                        </label>
+                        
+                        <label class="haven-option">
+                            <input type="checkbox" name="haven-libraries" value="libraries" class="hidden haven-checkbox">
+                            <div class="haven-card-select">
+                                <span class="text-3xl mb-2">📚</span>
+                                <p class="font-medium text-gray-900 dark:text-white">Libraries</p>
+                            </div>
+                        </label>
+                        
+                        <label class="haven-option">
+                            <input type="checkbox" name="haven-cafes" value="cafes" class="hidden haven-checkbox">
+                            <div class="haven-card-select">
+                                <span class="text-3xl mb-2">☕</span>
+                                <p class="font-medium text-gray-900 dark:text-white">Quiet Cafes</p>
+                            </div>
+                        </label>
+                        
+                        <label class="haven-option">
+                            <input type="checkbox" name="haven-museums" value="museums" class="hidden haven-checkbox">
+                            <div class="haven-card-select">
+                                <span class="text-3xl mb-2">🏛️</span>
+                                <p class="font-medium text-gray-900 dark:text-white">Museums</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Emergency Contact -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-gray-900 dark:text-white flex items-center">
+                        <i data-lucide="phone" class="w-5 h-5 mr-2 text-primary-teal"></i>
+                        Emergency Contact (Optional)
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                        Add a trusted person to call during panic mode
+                    </p>
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                Contact Name
+                            </label>
+                            <input type="text" 
+                                   name="emergency-name" 
+                                   class="input" 
+                                   placeholder="e.g., Mom, Best Friend">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                Phone Number
+                            </label>
+                            <input type="tel" 
+                                   name="emergency-phone" 
+                                   class="input" 
+                                   placeholder="(555) 123-4567">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Submit Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t dark:border-gray-700">
+                    <button type="button" 
+                            id="skip-btn" 
+                            class="btn btn-outline flex-1">
+                        Skip for Now
+                    </button>
+                    <button type="submit" 
+                            class="btn btn-primary flex-1">
+                        <i data-lucide="check" class="w-5 h-5 mr-2"></i>
+                        Complete Setup
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+    .haven-card-select {
+        @apply flex flex-col items-center justify-center p-6 rounded-lg border-2 border-gray-200 dark:border-gray-700 
+               hover:border-primary-teal cursor-pointer transition-all duration-300;
+    }
+    
+    .haven-checkbox:checked + .haven-card-select {
+        @apply border-primary-teal bg-primary-teal bg-opacity-10;
+    }
+</style>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    const form = document.getElementById('profile-setup-form');
+    const skipBtn = document.getElementById('skip-btn');
+    
+    // Handle form submission
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        NeuroNav.setLoading(submitBtn, true, 'Saving...');
+        
+        // Collect form data
+        const formData = new FormData(form);
+        const preferences = {
+            sensitivities: [],
+            safeHavens: [],
+            emergencyContact: {
+                name: formData.get('emergency-name'),
+                phone: formData.get('emergency-phone')
+            }
+        };
+        
+        // Collect sensitivities
+        ['noise', 'lights', 'crowds', 'smells', 'construction'].forEach(sensitivity => {
+            if (formData.get(`sensitivity-${sensitivity}`)) {
+                preferences.sensitivities.push(sensitivity);
+            }
+        });
+        
+        // Collect safe havens
+        ['parks', 'libraries', 'cafes', 'museums'].forEach(haven => {
+            if (formData.get(`haven-${haven}`)) {
+                preferences.safeHavens.push(haven);
+            }
+        });
+        
+        try {
+            const response = await fetch("{{ url_for('profile_setup') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(preferences)
+            });
+            
+            if (response.ok) {
+                NeuroNav.showToast('Profile saved successfully!', 'success');
+                setTimeout(() => {
+                    window.location.href = "{{ url_for('dashboard') }}";
+                }, 1000);
+            } else {
+                throw new Error('Failed to save profile');
+            }
+        } catch (error) {
+            NeuroNav.setLoading(submitBtn, false);
+            NeuroNav.showToast('Failed to save profile. Please try again.', 'error');
+        }
+    });
+    
+    // Handle skip button
+    skipBtn.addEventListener('click', () => {
+        if (confirm('Are you sure you want to skip? You can always set preferences later.')) {
+            window.location.href = "{{ url_for('dashboard') }}";
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}Community - Neuro-Nav{% endblock %}
+{% block content %}
+<div class="py-8 px-4">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">👥 Share Your Experience</h1>
+        
+        <div class="card p-8">
+            <p class="text-gray-600 dark:text-gray-400 mb-6 text-center">
+                Help make the map better for everyone (Anonymous)
+            </p>
+            
+            <form id="community-form" class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium mb-2">📍 Location</label>
+                    <input type="text" class="input" value="Current Location" readonly>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-3">How calm is this area right now?</label>
+                    <div class="flex justify-between items-center">
+                        <span>😰</span>
+                        <input type="range" min="1" max="10" value="5" class="flex-1 mx-4" id="calm-slider">
+                        <span>😌</span>
+                    </div>
+                    <p class="text-center mt-2 text-2xl font-bold" id="calm-value">5</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-3">What did you notice?</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="flex items-center p-3 border-2 rounded-lg cursor-pointer hover:border-primary-teal">
+                            <input type="checkbox" class="mr-2">
+                            <span>🔊 Loud Noises</span>
+                        </label>
+                        <label class="flex items-center p-3 border-2 rounded-lg cursor-pointer hover:border-primary-teal">
+                            <input type="checkbox" class="mr-2">
+                            <span>💡 Bright Lights</span>
+                        </label>
+                        <label class="flex items-center p-3 border-2 rounded-lg cursor-pointer hover:border-primary-teal">
+                            <input type="checkbox" class="mr-2">
+                            <span>👥 Dense Crowds</span>
+                        </label>
+                        <label class="flex items-center p-3 border-2 rounded-lg cursor-pointer hover:border-primary-teal">
+                            <input type="checkbox" class="mr-2">
+                            <span>🚧 Construction</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">📸 Upload Scene Video (Optional)</label>
+                    <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center">
+                        <input type="file" accept="video/*" class="hidden" id="video-upload">
+                        <label for="video-upload" class="cursor-pointer">
+                            <div class="text-5xl mb-3">📹</div>
+                            <p class="font-medium mb-1">Click to record or upload</p>
+                            <p class="text-sm text-gray-500">10 second max • AI will analyze conditions</p>
+                        </label>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium mb-2">Additional Notes</label>
+                    <textarea class="input" rows="3" placeholder="Any other details..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-full text-lg">
+                    <i data-lucide="send" class="w-5 h-5 mr-2"></i>
+                    Submit Report
+                </button>
+            </form>
+            
+            <div class="mt-8 p-4 bg-blue-50 dark:bg-blue-900 dark:bg-opacity-20 rounded-lg text-center">
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                    Your contribution helps others! 💙
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_scripts %}
+<script>
+    const slider = document.getElementById('calm-slider');
+    const value = document.getElementById('calm-value');
+    slider.addEventListener('input', (e) => {
+        value.textContent = e.target.value;
+    });
+</script>
+{% endblock %}

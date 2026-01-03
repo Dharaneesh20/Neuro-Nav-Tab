@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}History - Neuro-Nav{% endblock %}
+{% block content %}
+<div class="py-8 px-4">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-gray-900 dark:text-white">📊 Your Journey</h1>
+        
+        <div class="grid md:grid-cols-4 gap-6 mb-8">
+            <div class="card p-6 text-center">
+                <div class="text-4xl mb-2">🛣️</div>
+                <p class="text-3xl font-bold text-primary-teal">12</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Calm Routes</p>
+            </div>
+            <div class="card p-6 text-center">
+                <div class="text-4xl mb-2">🚶</div>
+                <p class="text-3xl font-bold text-success-green">18.4</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Miles Walked</p>
+            </div>
+            <div class="card p-6 text-center">
+                <div class="text-4xl mb-2">🌳</div>
+                <p class="text-3xl font-bold text-secondary-lavender">3</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">New Havens</p>
+            </div>
+            <div class="card p-6 text-center">
+                <div class="text-4xl mb-2">📝</div>
+                <p class="text-3xl font-bold text-warning-yellow">8</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Contributions</p>
+            </div>
+        </div>
+        
+        <div class="card p-6 mb-8">
+            <h3 class="text-xl font-bold mb-4">Average Calm Score</h3>
+            <div class="h-64 flex items-end justify-between space-x-2">
+                <div class="flex-1 bg-primary-teal rounded-t-lg" style="height: 70%"></div>
+                <div class="flex-1 bg-primary-teal rounded-t-lg" style="height: 85%"></div>
+                <div class="flex-1 bg-primary-teal rounded-t-lg" style="height: 75%"></div>
+                <div class="flex-1 bg-primary-teal rounded-t-lg" style="height: 90%"></div>
+                <div class="flex-1 bg-primary-teal rounded-t-lg" style="height: 80%"></div>
+            </div>
+            <div class="flex justify-between text-sm text-gray-500 mt-2">
+                <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span>
+            </div>
+        </div>
+        
+        <div class="card p-6">
+            <h3 class="text-xl font-bold mb-4">Recent Routes</h3>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div>
+                        <p class="font-semibold">Home → Office</p>
+                        <p class="text-sm text-gray-500">Yesterday • 1.2 mi • 18 min</p>
+                    </div>
+                    <span class="calm-score-high px-3 py-1 rounded-full">8.5</span>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                    <div>
+                        <p class="font-semibold">Grocery Store → Home</p>
+                        <p class="text-sm text-gray-500">2 days ago • 0.8 mi • 12 min</p>
+                    </div>
+                    <span class="calm-score-medium px-3 py-1 rounded-full">7.8</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

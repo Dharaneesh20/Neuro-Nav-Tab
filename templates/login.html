@@ -1,0 +1,264 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Neuro-Nav{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center px-4 py-12 relative overflow-hidden bg-gradient-to-br from-purple-100 via-pink-100 to-blue-100 dark:from-gray-900 dark:via-purple-900 dark:to-blue-900">
+    <!-- Animated Particles -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="particle particle-1"></div>
+        <div class="particle particle-2"></div>
+        <div class="particle particle-3"></div>
+    </div>
+    
+    <div class="max-w-md w-full z-10">
+        <!-- Login Card with Glassmorphism -->
+        <div class="glassmorphic-card p-8 animate-slide-up">
+            <!-- Logo & Title -->
+            <div class="text-center mb-8">
+                <div class="text-6xl mb-4 animate-bounce-slow">🧠</div>
+                <h1 class="text-4xl font-bold gradient-text mb-2">Welcome Back</h1>
+                <p class="text-gray-600 dark:text-gray-300">Sign in to continue your calm journey</p>
+            </div>
+            
+            <!-- Firebase Google Login Button -->
+            <button id="google-signin-btn" 
+                    class="btn w-full glass-button mb-4 flex items-center justify-center hover-lift">
+                <svg class="w-5 h-5 mr-3" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                <span class="font-semibold">Continue with Google</span>
+            </button>
+            
+            <!-- Divider -->
+            <div class="relative my-6">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-4 bg-white/60 dark:bg-gray-800/60 text-gray-600 dark:text-gray-400 rounded-full backdrop-blur-sm">
+                        or sign in with email
+                    </span>
+                </div>
+            </div>
+            
+            <!-- Firebase Email Login Form -->
+            <form id="email-login-form" class="space-y-4">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i data-lucide="mail" class="w-4 h-4 inline mr-1"></i>
+                        Email Address
+                    </label>
+                    <input type="email" 
+                           id="email" 
+                           name="email" 
+                           required 
+                           class="input glass-input"
+                           placeholder="you@example.com">
+                </div>
+                
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        <i data-lucide="lock" class="w-4 h-4 inline mr-1"></i>
+                        Password
+                    </label>
+                    <input type="password" 
+                           id="password" 
+                           name="password" 
+                           required 
+                           class="input glass-input"
+                           placeholder="••••••••">
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center">
+                        <input type="checkbox" class="rounded border-gray-300 text-primary-sky focus:ring-primary-sky">
+                        <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
+                    </label>
+                    <a href="#" class="text-sm text-primary-sky hover:text-secondary-pink transition-colors">
+                        Forgot password?
+                    </a>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-full hover-lift">
+                    <i data-lucide="log-in" class="w-5 h-5 mr-2"></i>
+                    Sign In
+                </button>
+            </form>
+            
+            <!-- Sign Up Link -->
+            <div class="mt-6 text-center">
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                    Don't have an account? 
+                    <a href="#" id="signup-link" class="text-primary-sky hover:text-secondary-pink font-semibold transition-colors">
+                        Sign up now
+                    </a>
+                </p>
+            </div>
+            
+            <!-- Features Preview -->
+            <div class="mt-8 grid grid-cols-3 gap-3 pt-6 border-t border-gray-200 dark:border-gray-700">
+                <div class="text-center">
+                    <div class="text-2xl mb-1">🗺️</div>
+                    <div class="text-xs text-gray-600 dark:text-gray-400">Calm Routes</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl mb-1">🌳</div>
+                    <div class="text-xs text-gray-600 dark:text-gray-400">Safe Havens</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl mb-1">🤝</div>
+                    <div class="text-xs text-gray-600 dark:text-gray-400">Community</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Terms & Privacy -->
+        <div class="text-center mt-6 text-xs text-gray-500 dark:text-gray-400">
+            By signing in, you agree to our 
+            <a href="#" class="underline hover:text-primary-sky">Terms</a> and 
+            <a href="#" class="underline hover:text-primary-sky">Privacy Policy</a>
+        </div>
+    </div>
+</div>
+
+<!-- Firebase SDK -->
+<script type="module">
+    // Import Firebase SDKs
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+    import { getAuth, signInWithPopup, signInWithEmailAndPassword, GoogleAuthProvider } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+    import { getAnalytics } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js';
+
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyB_VkMt50Gopzy2Tt_q3FhopVHNW0-UkW8",
+        authDomain: "smart-campus-manager.firebaseapp.com",
+        projectId: "smart-campus-manager",
+        storageBucket: "smart-campus-manager.firebasestorage.app",
+        messagingSenderId: "35838544206",
+        appId: "1:35838544206:web:88b32b4021a69248de761f",
+        measurementId: "G-2P1JGMHKV2"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const analytics = getAnalytics(app);
+    const googleProvider = new GoogleAuthProvider();
+
+    // Google Sign In
+    document.getElementById('google-signin-btn').addEventListener('click', async () => {
+        try {
+            const result = await signInWithPopup(auth, googleProvider);
+            const user = result.user;
+            
+            // Send to Flask backend
+            const response = await fetch('/auth/firebase', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    user: {
+                        uid: user.uid,
+                        email: user.email,
+                        displayName: user.displayName,
+                        photoURL: user.photoURL
+                    }
+                })
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                window.location.href = data.redirect;
+            }
+        } catch (error) {
+            console.error('Sign In Error:', error);
+            if (window.NeuroNav) {
+                NeuroNav.showToast(error.message || 'Failed to sign in', 'error');
+            } else {
+                alert(error.message || 'Failed to sign in');
+            }
+        }
+    });
+
+    // Email/Password Sign In
+    document.getElementById('email-login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        try {
+            const result = await signInWithEmailAndPassword(auth, email, password);
+            const user = result.user;
+            
+            const response = await fetch('/auth/firebase', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    user: {
+                        uid: user.uid,
+                        email: user.email,
+                        displayName: user.displayName || email.split('@')[0],
+                        photoURL: user.photoURL || ''
+                    }
+                })
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                window.location.href = data.redirect;
+            }
+        } catch (error) {
+            let msg = 'Failed to sign in';
+            if (error.code === 'auth/user-not-found') msg = 'No account found. Please sign up.';
+            if (error.code === 'auth/wrong-password') msg = 'Incorrect password.';
+            if (window.NeuroNav) {
+                NeuroNav.showToast(msg, 'error');
+            } else {
+                alert(msg);
+            }
+        }
+    });
+</script>
+
+<style>
+    .particle {
+        position: absolute;
+        background: linear-gradient(135deg, #0EA5E9, #EC4899);
+        border-radius: 50%;
+        opacity: 0.15;
+        animation: float-particle 20s infinite ease-in-out;
+    }
+    
+    .particle-1 { width: 100px; height: 100px; top: 10%; left: 10%; animation-delay: 0s; }
+    .particle-2 { width: 150px; height: 150px; top: 60%; right: 10%; animation-delay: 5s; }
+    .particle-3 { width: 80px; height: 80px; bottom: 20%; left: 15%; animation-delay: 10s; }
+    
+    @keyframes float-particle {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); }
+        25% { transform: translate(30px, -30px) rotate(90deg); }
+        50% { transform: translate(-20px, 20px) rotate(180deg); }
+        75% { transform: translate(20px, 30px) rotate(270deg); }
+    }
+    
+    .animate-bounce-slow {
+        animation: bounce-slow 2s ease-in-out infinite;
+    }
+    
+    @keyframes bounce-slow {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    .hover-lift {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px rgba(14, 165, 233, 0.3);
+    }
+</style>
+{% endblock %}

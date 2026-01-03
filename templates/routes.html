@@ -1,0 +1,321 @@
+{% extends "base.html" %}
+{% block title %}Route Planning - Neuro-Nav{% endblock %}
+{% block content %}
+<div class="py-8 px-4">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl font-bold mb-8 text-gray-900 dark:text-white">🗺️ Plan Your Calm Route</h1>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2">
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-6">
+                    <form id="route-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">From</label>
+                            <input type="text"
+                                class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-primary-sky outline-none transition-all"
+                                placeholder="Current Location" value="Current Location" disabled>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">To</label>
+                            <input type="text" id="destination"
+                                class="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:ring-2 focus:ring-primary-sky outline-none transition-all"
+                                placeholder="Enter destination" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-3 text-gray-700 dark:text-gray-300">Route
+                                Preference</label>
+                            <div class="space-y-2">
+                                <label
+                                    class="flex items-center p-3 border-2 border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-primary-sky transition-colors">
+                                    <input type="radio" name="route-type" value="fastest"
+                                        class="mr-3 text-primary-sky focus:ring-primary-sky">
+                                    <div class="flex-1">
+                                        <p class="font-semibold text-gray-900 dark:text-white">⚡ Fastest</p>
+                                        <p class="text-xs text-gray-500">Quickest route available</p>
+                                    </div>
+                                </label>
+                                <label
+                                    class="flex items-center p-3 border-2 border-primary-sky rounded-lg cursor-pointer bg-primary-sky/10">
+                                    <input type="radio" name="route-type" value="calmest" checked
+                                        class="mr-3 text-primary-sky focus:ring-primary-sky">
+                                    <div class="flex-1">
+                                        <p class="font-semibold text-gray-900 dark:text-white">🧘 Calmest (Recommended)
+                                        </p>
+                                        <p class="text-xs text-gray-500">Lowest sensory stimulation</p>
+                                    </div>
+                                </label>
+                                <label
+                                    class="flex items-center p-3 border-2 border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:border-primary-sky transition-colors">
+                                    <input type="radio" name="route-type" value="scenic"
+                                        class="mr-3 text-primary-sky focus:ring-primary-sky">
+                                    <div class="flex-1">
+                                        <p class="font-semibold text-gray-900 dark:text-white">🌳 Scenic</p>
+                                        <p class="text-xs text-gray-500">Most parks and nature</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full py-3 bg-gradient-to-r from-primary-sky to-primary-sky-dark text-white rounded-lg font-bold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">
+                            Calculate Routes
+                        </button>
+                    </form>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-1 overflow-hidden">
+                    <div class="map-container h-[400px] rounded-lg overflow-hidden relative">
+                        <iframe class="w-full h-full border-0"
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15000!2d0!3d0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus"
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                    <h3 class="font-bold text-lg mb-4 text-gray-900 dark:text-white">Avoid</h3>
+                    <div class="space-y-4">
+                        <label class="flex items-center justify-between cursor-pointer">
+                            <span class="text-gray-700 dark:text-gray-300">🚧 Construction</span>
+                            <div
+                                class="relative inline-block w-12 h-6 transition duration-200 ease-in-out rounded-full bg-gray-200 dark:bg-gray-700">
+                                <input type="checkbox" checked
+                                    class="absolute w-full h-full opacity-0 cursor-pointer peer">
+                                <span
+                                    class="absolute left-0 top-0 bottom-0 w-6 h-6 bg-white border border-gray-300 rounded-full shadow transition-transform duration-200 peer-checked:translate-x-6 peer-checked:bg-primary-sky peer-checked:border-primary-sky"></span>
+                            </div>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer">
+                            <span class="text-gray-700 dark:text-gray-300">🚗 Busy Streets</span>
+                            <div
+                                class="relative inline-block w-12 h-6 transition duration-200 ease-in-out rounded-full bg-gray-200 dark:bg-gray-700">
+                                <input type="checkbox" checked
+                                    class="absolute w-full h-full opacity-0 cursor-pointer peer">
+                                <span
+                                    class="absolute left-0 top-0 bottom-0 w-6 h-6 bg-white border border-gray-300 rounded-full shadow transition-transform duration-200 peer-checked:translate-x-6 peer-checked:bg-primary-sky peer-checked:border-primary-sky"></span>
+                            </div>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer">
+                            <span class="text-gray-700 dark:text-gray-300">🚇 Tunnels</span>
+                            <div
+                                class="relative inline-block w-12 h-6 transition duration-200 ease-in-out rounded-full bg-gray-200 dark:bg-gray-700">
+                                <input type="checkbox" class="absolute w-full h-full opacity-0 cursor-pointer peer">
+                                <span
+                                    class="absolute left-0 top-0 bottom-0 w-6 h-6 bg-white border border-gray-300 rounded-full shadow transition-transform duration-200 peer-checked:translate-x-6 peer-checked:bg-primary-sky peer-checked:border-primary-sky"></span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Route Results Container -->
+        <div id="route-results" class="max-w-7xl mx-auto mt-8 hidden animate-slide-up">
+            <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Available Routes</h2>
+            <div id="routes-list" class="space-y-4"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    let userLocation = null;
+
+    async function getUserLocation() {
+        if (userLocation) return userLocation;
+        try {
+            const position = await NeuroNav.getCurrentLocation();
+            userLocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            return userLocation;
+        } catch (error) {
+            NeuroNav.showToast('Please enable location services', 'error');
+            throw error;
+        }
+    }
+
+    document.getElementById('route-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const destination = document.getElementById('destination').value;
+        const routeType = document.querySelector('input[name="route-type"]:checked').value;
+
+        if (!destination) {
+            NeuroNav.showToast('Please enter a destination', 'warning');
+            return;
+        }
+
+        try {
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="animate-spin">⏳</span> Calculating routes...';
+            submitBtn.disabled = true;
+
+            const location = await getUserLocation();
+            const searchResults = await NeuroNav.fetchAPI(
+                `/api/search-places?query=${encodeURIComponent(destination)}&lat=${location.lat}&lng=${location.lng}`
+            );
+
+            if (searchResults.length === 0) {
+                NeuroNav.showToast('Destination not found. Try a different search.', 'error');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                return;
+            }
+
+            const destPlace = searchResults[0];
+            const avoidBusyStreets = document.querySelector('input[type="checkbox"]:nth-of-type(2)').checked;
+
+            const response = await fetch('/api/calculate-route', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    origin: { lat: location.lat, lng: location.lng, name: 'Current Location' },
+                    destination: { lat: destPlace.lat, lng: destPlace.lng, name: destPlace.name },
+                    preferences: {
+                        avoid_crowds: avoidBusyStreets,
+                        prefer_nature: routeType === 'scenic',
+                        time_sensitive: routeType === 'fastest'
+                    }
+                })
+            });
+
+            const routes = await response.json();
+            displayRoutes(routes, destPlace);
+
+            if (routes.length > 0 && routes[0].embed_url) {
+                updateMapWithUrl(routes[0].embed_url);
+            }
+
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            NeuroNav.showToast('Routes calculated successfully!', 'success');
+        } catch (error) {
+            console.error('Route calculation error:', error);
+            NeuroNav.showToast('Failed to calculate routes. Please try again.', 'error');
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+
+    function displayRoutes(routes, destination) {
+        const container = document.getElementById('routes-list');
+        const resultsSection = document.getElementById('route-results');
+        resultsSection.classList.remove('hidden');
+
+        container.innerHTML = routes.map((route, index) => `
+            <div class="bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-xl p-6 hover:shadow-xl transition-all border border-white/20">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="text-3xl">
+                            <i class="bi ${getRouteIcon(route.route_type)} text-${getRouteColor(route.route_type)}-500"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-gray-900 dark:text-white">
+                                ${route.name || 'Calm Route'}
+                            </h3>
+                            <p class="text-sm text-gray-500 flex items-center gap-2">
+                                <i class="bi bi-rulers"></i> ${route.distance_miles} mi • 
+                                <i class="bi bi-clock"></i> ${route.duration} min
+                            </p>
+                        </div>
+                    </div>
+                    <div class="${NeuroNav.getCalmScoreClass(route.calm_score)} px-4 py-2 rounded-full text-lg font-bold shadow-md">
+                        ${route.calm_score.toFixed(1)}
+                    </div>
+                </div>
+                
+                ${route.warnings && route.warnings.length > 0 ? `
+                    <div class="mb-4 p-3 bg-yellow-50/80 dark:bg-yellow-900/20 border-l-4 border-yellow-400 rounded backdrop-blur-sm">
+                        <p class="text-sm font-semibold text-yellow-800 dark:text-yellow-200 mb-1 flex items-center gap-1">
+                            <i class="bi bi-exclamation-triangle-fill"></i> Route Notes:
+                        </p>
+                        <ul class="text-sm text-yellow-700 dark:text-yellow-300 list-disc list-inside">
+                            ${route.warnings.map(w => `<li>${w}</li>`).join('')}
+                        </ul>
+                    </div>
+                ` : ''}
+                
+                <div class="grid grid-cols-3 gap-4 mb-4">
+                    <div class="text-center p-3 bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-xl border border-white/20">
+                        <p class="text-2xl mb-1"><i class="bi bi-person-walking text-sky-500"></i></p>
+                        <p class="text-xs text-gray-500">Walking</p>
+                    </div>
+                    <div class="text-center p-3 bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-xl border border-white/20">
+                        <p class="text-2xl mb-1">
+                            <i class="bi ${route.calm_score >= 8 ? 'bi-emoji-smile-fill text-green-500' : route.calm_score >= 6 ? 'bi-emoji-neutral-fill text-yellow-500' : 'bi-emoji-frown-fill text-orange-500'}"></i>
+                        </p>
+                        <p class="text-xs text-gray-500">Calm Level</p>
+                    </div>
+                    <div class="text-center p-3 bg-white/60 dark:bg-gray-800/60 backdrop-blur-md rounded-xl border border-white/20">
+                        <p class="text-2xl mb-1"><i class="bi bi-stopwatch text-purple-500"></i></p>
+                        <p class="text-xs text-gray-500">${route.duration} min</p>
+                    </div>
+                </div>
+                
+                <div class="flex gap-3">
+                    <a href="${route.maps_url}" target="_blank" class="flex-1 py-3 bg-gradient-to-r from-primary-sky to-primary-sky-dark text-white rounded-lg font-bold shadow hover:shadow-lg text-center transition-all">
+                        <i class="bi bi-navigation-fill mr-2"></i>
+                        Start Navigation
+                    </a>
+                    <button onclick="NeuroNav.showToast('Route saved!', 'success')" class="px-4 py-3 border-2 border-primary-sky text-primary-sky rounded-lg hover:bg-primary-sky hover:text-white transition-all">
+                        <i class="bi bi-bookmark-fill"></i>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function getRouteIcon(routeType) {
+        const icons = {
+            calm: 'bi-heart-pulse-fill',
+            balanced: 'bi-speedometer',
+            fast: 'bi-lightning-charge-fill'
+        };
+        return icons[routeType] || 'bi-map-fill';
+    }
+
+    function getRouteColor(routeType) {
+        const colors = {
+            calm: 'green',
+            balanced: 'blue',
+            fast: 'yellow'
+        };
+        return colors[routeType] || 'gray';
+    }
+
+    function updateMapWithUrl(embedUrl) {
+        const mapFrame = document.querySelector('.map-container iframe');
+        mapFrame.src = embedUrl;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const currentRoute = localStorage.getItem('current_route_calculation');
+        if (currentRoute) {
+            const routeData = JSON.parse(currentRoute);
+            document.getElementById('destination').value = routeData.to_name;
+            displayRoutes(routeData.routes, { name: routeData.to_name });
+
+            // Show the first route's map if available
+            if (routeData.routes && routeData.routes.length > 0 && routeData.routes[0].embed_url) {
+                updateMapWithUrl(routeData.routes[0].embed_url);
+            }
+
+            localStorage.removeItem('current_route_calculation');
+        } else {
+            getUserLocation().then(loc => {
+                const mapUrl = `https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15000!2d${loc.lng}!3d${loc.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus`;
+                updateMapWithUrl(mapUrl);
+            }).catch(() => { });
+        }
+    });
+</script>
+{% endblock %}

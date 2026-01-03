@@ -1,0 +1,325 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to Neuro-Nav - Calm Navigation for Everyone{% endblock %}
+
+{% block content %}
+<div class="relative overflow-hidden">
+    <!-- Animated Background Blobs -->
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+    <div class="hero-blob hero-blob-3"></div>
+    
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center px-4 py-20">
+        <div class="max-w-6xl mx-auto text-center z-10">
+            <!-- Hero Content -->
+            <div class="animate-fade-in">
+                <div class="text-6xl md:text-8xl mb-6 animate-float">🧠</div>
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 gradient-text">
+                    Neuro-Nav
+                </h1>
+                <p class="text-xl md:text-2xl lg:text-3xl text-gray-700 dark:text-gray-300 mb-4 font-semibold">
+                    Calm Routes for Mindful Journeys
+                </p>
+                <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-12 max-w-3xl mx-auto">
+                    Navigate the world with less stress. Find quiet routes, discover safe havens, 
+                    and travel with confidence designed for neurodivergent individuals.
+                </p>
+                
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+                    <a href="{{ url_for('login') }}" class="btn btn-primary text-lg px-8 py-4 w-full sm:w-auto">
+                        <i data-lucide="log-in" class="w-5 h-5 inline mr-2"></i>
+                        Get Started Free
+                    </a>
+                    <a href="#features" class="btn btn-outline text-lg px-8 py-4 w-full sm:w-auto">
+                        <i data-lucide="info" class="w-5 h-5 inline mr-2"></i>
+                        Learn More
+                    </a>
+                </div>
+                
+                <!-- Trust Indicators -->
+                <div class="flex flex-wrap justify-center items-center gap-8 text-sm text-gray-500 dark:text-gray-400">
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="shield-check" class="w-5 h-5 text-primary-teal"></i>
+                        <span>100% Private</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="users" class="w-5 h-5 text-primary-teal"></i>
+                        <span>Community Powered</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="heart" class="w-5 h-5 text-primary-teal"></i>
+                        <span>Built with Care</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section id="features" class="py-20 px-4 bg-gray-100 dark:bg-gray-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16" data-animate>
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 gradient-text">
+                    Why Choose Neuro-Nav?
+                </h2>
+                <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                    Designed specifically for individuals with sensory processing differences
+                </p>
+            </div>
+            
+            <div class="grid-auto-fit">
+                <!-- Feature 1 -->
+                <div class="feature-card" data-animate>
+                    <div class="text-5xl mb-4">🛣️</div>
+                    <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">Sensory-Safe Routes</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        Our AI analyzes noise levels, crowd density, and lighting to suggest the calmest paths to your destination.
+                    </p>
+                    <div class="flex items-center space-x-2 text-primary-teal">
+                        <i data-lucide="check-circle" class="w-5 h-5"></i>
+                        <span class="font-medium">Real-time Calm Scores</span>
+                    </div>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card" data-animate style="animation-delay: 0.1s">
+                    <div class="text-5xl mb-4">🆘</div>
+                    <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">Instant Panic Support</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        One-tap emergency mode finds the nearest quiet space with guided breathing exercises and navigation.
+                    </p>
+                    <div class="flex items-center space-x-2 text-primary-teal">
+                        <i data-lucide="check-circle" class="w-5 h-5"></i>
+                        <span class="font-medium">Always Available</span>
+                    </div>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card" data-animate style="animation-delay: 0.2s">
+                    <div class="text-5xl mb-4">🌳</div>
+                    <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">Safe Haven Directory</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        Discover quiet parks, libraries, and cafes perfect for sensory breaks along your route.
+                    </p>
+                    <div class="flex items-center space-x-2 text-primary-teal">
+                        <i data-lucide="check-circle" class="w-5 h-5"></i>
+                        <span class="font-medium">Curated & Rated</span>
+                    </div>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="feature-card" data-animate style="animation-delay: 0.3s">
+                    <div class="text-5xl mb-4">📊</div>
+                    <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">Personalized Experience</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        Set your sensory preferences and we'll customize routes to avoid your specific triggers.
+                    </p>
+                    <div class="flex items-center space-x-2 text-primary-teal">
+                        <i data-lucide="check-circle" class="w-5 h-5"></i>
+                        <span class="font-medium">You're in Control</span>
+                    </div>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="feature-card" data-animate style="animation-delay: 0.4s">
+                    <div class="text-5xl mb-4">👥</div>
+                    <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">Community Powered</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        Help others by reporting sensory conditions and sharing safe spaces anonymously.
+                    </p>
+                    <div class="flex items-center space-x-2 text-primary-teal">
+                        <i data-lucide="check-circle" class="w-5 h-5"></i>
+                        <span class="font-medium">Together We're Stronger</span>
+                    </div>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="feature-card" data-animate style="animation-delay: 0.5s">
+                    <div class="text-5xl mb-4">🔒</div>
+                    <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-white">Privacy First</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        Your location data stays private. No tracking, no selling data, just help when you need it.
+                    </p>
+                    <div class="flex items-center space-x-2 text-primary-teal">
+                        <i data-lucide="check-circle" class="w-5 h-5"></i>
+                        <span class="font-medium">Your Data, Your Rules</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works Section -->
+    <section class="py-20 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16" data-animate>
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 gradient-text">
+                    How It Works
+                </h2>
+                <p class="text-lg text-gray-600 dark:text-gray-400">
+                    Getting started is simple and takes less than 2 minutes
+                </p>
+            </div>
+            
+            <div class="space-y-12">
+                <!-- Step 1 -->
+                <div class="flex flex-col md:flex-row items-center gap-8" data-animate>
+                    <div class="flex-shrink-0 w-20 h-20 rounded-full bg-gradient-to-r from-primary-teal to-primary-teal-dark flex items-center justify-center text-white text-3xl font-bold">
+                        1
+                    </div>
+                    <div class="flex-1 text-center md:text-left">
+                        <h3 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Create Your Profile</h3>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            Sign up with Google in seconds. Tell us about your sensory preferences so we can personalize your experience.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="flex flex-col md:flex-row-reverse items-center gap-8" data-animate>
+                    <div class="flex-shrink-0 w-20 h-20 rounded-full bg-gradient-to-r from-secondary-lavender to-secondary-lavender-dark flex items-center justify-center text-white text-3xl font-bold">
+                        2
+                    </div>
+                    <div class="flex-1 text-center md:text-right">
+                        <h3 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Plan Your Route</h3>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            Enter your destination and we'll calculate multiple routes with calm scores. Choose the one that feels right.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="flex flex-col md:flex-row items-center gap-8" data-animate>
+                    <div class="flex-shrink-0 w-20 h-20 rounded-full bg-gradient-to-r from-success-green to-green-500 flex items-center justify-center text-white text-3xl font-bold">
+                        3
+                    </div>
+                    <div class="flex-1 text-center md:text-left">
+                        <h3 class="text-2xl font-bold mb-2 text-gray-900 dark:text-white">Navigate with Confidence</h3>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            Follow turn-by-turn directions with sensory alerts. Access panic mode anytime if you need a quick break.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="py-20 px-4 bg-gradient-to-br from-primary-teal to-secondary-lavender">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16" data-animate>
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">
+                    What Our Users Say
+                </h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="glass-card p-6 text-white" data-animate>
+                    <div class="mb-4">
+                        <div class="star-rating mb-2">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                    </div>
+                    <p class="mb-4 italic">
+                        "This app has changed my life. I can finally go places without constantly worrying about sensory overload."
+                    </p>
+                    <p class="font-semibold">— Sarah M.</p>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="glass-card p-6 text-white" data-animate style="animation-delay: 0.1s">
+                    <div class="mb-4">
+                        <div class="star-rating mb-2">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                    </div>
+                    <p class="mb-4 italic">
+                        "The panic mode feature has been a lifesaver. Knowing I can find a quiet spot immediately gives me so much peace."
+                    </p>
+                    <p class="font-semibold">— James T.</p>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="glass-card p-6 text-white" data-animate style="animation-delay: 0.2s">
+                    <div class="mb-4">
+                        <div class="star-rating mb-2">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                    </div>
+                    <p class="mb-4 italic">
+                        "As a parent of an autistic child, this app helps us plan family outings with confidence. Highly recommend!"
+                    </p>
+                    <p class="font-semibold">— Maria L.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Final CTA Section -->
+    <section class="py-20 px-4">
+        <div class="max-w-4xl mx-auto text-center" data-animate>
+            <h2 class="text-3xl md:text-5xl font-bold mb-6 gradient-text">
+                Ready to Navigate with Calm?
+            </h2>
+            <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">
+                Join thousands of users finding peace in their daily journeys
+            </p>
+            <a href="{{ url_for('login') }}" class="btn btn-primary text-lg px-12 py-4 inline-flex items-center">
+                <i data-lucide="rocket" class="w-5 h-5 mr-2"></i>
+                Start Your Journey
+            </a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-12 px-4 bg-gray-100 dark:bg-gray-800 border-t dark:border-gray-700">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <span class="text-3xl">🧠</span>
+                        <span class="text-xl font-bold gradient-text">Neuro-Nav</span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400">
+                        Calm navigation for neurodivergent individuals
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4 text-gray-900 dark:text-white">Product</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#features" class="text-gray-600 dark:text-gray-400 hover:text-primary-teal">Features</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary-teal">Pricing</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary-teal">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4 text-gray-900 dark:text-white">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary-teal">About Us</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary-teal">Blog</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary-teal">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4 text-gray-900 dark:text-white">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary-teal">Privacy</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary-teal">Terms</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary-teal">Security</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="text-center pt-8 border-t dark:border-gray-700 text-gray-600 dark:text-gray-400">
+                <p>&copy; 2026 Neuro-Nav. Made with 💙 for the neurodivergent community.</p>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock %}

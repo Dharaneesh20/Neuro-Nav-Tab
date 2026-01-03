@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% block title %}Safe Havens - Neuro-Nav{% endblock %}
+{% block content %}
+<div class="py-8 px-4">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white flex items-center gap-2">
+            <i class="bi bi-tree-fill text-green-500"></i> Safe Havens Near You
+        </h1>
+        
+        <div class="card p-6 mb-6 backdrop-blur-md bg-white/80 dark:bg-gray-800/80">
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-1 relative">
+                    <i class="bi bi-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" id="search-input" class="input pl-10" placeholder="Search safe havens...">
+                </div>
+                <div class="flex gap-2" id="filter-buttons">
+                    <button class="btn btn-primary" data-filter="all">All</button>
+                    <button class="btn btn-outline" data-filter="park">
+                        <i class="bi bi-tree-fill"></i> Parks
+                    </button>
+                    <button class="btn btn-outline" data-filter="library">
+                        <i class="bi bi-book-fill"></i> Libraries
+                    </button>
+                    <button class="btn btn-outline" data-filter="cafe">
+                        <i class="bi bi-cup-hot-fill"></i> Cafes
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="havens-container" class="grid lg:grid-cols-3 gap-6">
+            <div class="col-span-3 text-center p-8">
+                <div class="inline-block animate-spin text-4xl text-sky-500">
+                    <i class="bi bi-arrow-repeat"></i>
+                </div>
+                <p class="mt-4 text-gray-500">Loading safe havens...</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    let userLocation = null;
+    let allHavens = [];
+    let currentFilter = 'all';
+    
+    async function getUserLocation() {
+        if (userLocation) return userLocation;
+        try {
+            const position = await NeuroNav.getCurrentLocation();
+            userLocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            return userLocation;
+        } catch (error) {
+            userLocation = { lat: 40.7128, lng: -74.0060 };
+            NeuroNav.showToast('Using default location', 'info');
+            return userLocation;
+        }
+    }
+    
+    async function loadHavens() {
+        try {
+            const location = await getUserLocation();
+            const response = await NeuroNav.fetchAPI(`/api/nearby-havens?lat=${location.lat}&lng=${location.lng}`);
+            allHavens = response;
+            displayHavens(allHavens);
+        } catch (error) {
+            console.error('Error loading havens:', error);
+            document.getElementById('havens-container').innerHTML = `
+                <div class="col-span-3 text-center p-8 text-red-500">
+                    <i class="bi bi-exclamation-triangle text-4xl"></i>
+                    <p class="mt-4">Failed to load safe havens. Please try again.</p>
+                </div>
+            `;
+        }
+    }
+    
+    function displayHavens(havens) {
+        const container = document.getElementById('havens-container');
+        
+        if (havens.length === 0) {
+            container.innerHTML = `
+                <div class="col-span-3 text-center p-8 text-gray-500">
+                    <i class="bi bi-search text-4xl"></i>
+                    <p class="mt-4">No safe havens found</p>
+                </div>
+            `;
+            return;
+        }
+        
+        container.innerHTML = havens.map(haven => `
+            <div class="card p-6 hover:shadow-2xl transition-all cursor-pointer backdrop-blur-md bg-white/80 dark:bg-gray-800/80 border border-white/20">
+                <div class="text-5xl mb-3">
+                    <i class="bi ${getHavenIcon(haven.type)} text-${getHavenColor(haven.type)}-500"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">${haven.name}</h3>
+                <div class="flex items-center space-x-2 mb-3">
+                    <span class="${NeuroNav.getCalmScoreClass(haven.calm_score)} px-3 py-1.5 rounded-full text-sm font-bold shadow-sm">${haven.calm_score.toFixed(1)}</span>
+                    <span class="text-sm text-gray-500 flex items-center gap-1">
+                        ${generateStars(haven.rating)}
+                        <span>(${Math.floor(Math.random() * 200 + 50)})</span>
+                    </span>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 mb-4 flex items-center gap-2">
+                    <i class="bi bi-geo-alt-fill text-pink-500"></i> ${haven.distance.toFixed(1)} mi away •
+                    <i class="bi bi-clock-fill text-sky-500"></i> Open ${haven.open ? '6AM-10PM' : 'Closed'}
+                </p>
+                <div class="flex gap-2">
+                    <a href="${haven.maps_url}" target="_blank" class="btn btn-primary flex-1">
+                        <i class="bi bi-navigation-fill"></i> Navigate
+                    </a>
+                    <button onclick="saveHaven('${haven.name}')" class="btn btn-outline">
+                        <i class="bi bi-bookmark-fill"></i>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    function getHavenIcon(type) {
+        return { park: 'bi-tree-fill', library: 'bi-book-fill', cafe: 'bi-cup-hot-fill', museum: 'bi-building-fill' }[type] || 'bi-geo-fill';
+    }
+    
+    function getHavenColor(type) {
+        return { park: 'green', library: 'blue', cafe: 'orange', museum: 'purple' }[type] || 'gray';
+    }
+    
+    function generateStars(rating) {
+        let html = '';
+        for (let i = 0; i < Math.floor(rating); i++) {
+            html += '<i class="bi bi-star-fill text-yellow-400 text-xs"></i>';
+        }
+        return html;
+    }
+    
+    function saveHaven(name) {
+        NeuroNav.showToast(`${name} saved to favorites!`, 'success');
+    }
+    
+    // Filter functionality
+    document.querySelectorAll('[data-filter]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            currentFilter = btn.dataset.filter;
+            document.querySelectorAll('[data-filter]').forEach(b => {
+                b.classList.remove('btn-primary');
+                b.classList.add('btn-outline');
+            });
+            btn.classList.remove('btn-outline');
+            btn.classList.add('btn-primary');
+            
+            const filtered = currentFilter === 'all' ? allHavens : allHavens.filter(h => h.type === currentFilter);
+            displayHavens(filtered);
+        });
+    });
+    
+    // Search functionality
+    document.getElementById('search-input').addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase();
+        const filtered = allHavens.filter(h => 
+            h.name.toLowerCase().includes(query) || 
+            h.type.toLowerCase().includes(query)
+        );
+        displayHavens(currentFilter === 'all' ? filtered : filtered.filter(h => h.type === currentFilter));
+    });
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', loadHavens);
+</script>
+{% endblock %}

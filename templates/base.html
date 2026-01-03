@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Neuro-Nav - AI-powered navigation for neurodivergent individuals">
+    <title>{% block title %}Neuro-Nav{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%230EA5E9'/><path d='M50 20 L50 80 M20 50 L80 50' stroke='white' stroke-width='3'/><circle cx='50' cy='30' r='5' fill='%23EC4899'/></svg>">
+
+    <!-- Bootstrap CSS with Glassmorphism -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-sky': '#0EA5E9',
+                        'primary-sky-dark': '#0284C7',
+                        'primary-sky-light': '#38BDF8',
+                        'secondary-pink': '#EC4899',
+                        'secondary-pink-dark': '#DB2777',
+                        'secondary-pink-light': '#F472B6',
+                        'accent-purple': '#A855F7',
+                        'accent-purple-dark': '#9333EA',
+                        'accent-purple-light': '#C084FC',
+                        'success-green': '#10B981',
+                        'warning-amber': '#F59E0B',
+                        'danger-rose': '#F43F5E',
+                        // Legacy names for compatibility
+                        'primary-teal': '#0EA5E9',
+                        'primary-teal-dark': '#0284C7',
+                        'primary-teal-light': '#38BDF8',
+                        'secondary-lavender': '#EC4899',
+                        'secondary-lavender-dark': '#DB2777',
+                        'secondary-lavender-light': '#F472B6',
+                        'accent-coral': '#F43F5E',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'body': ['Work Sans', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'subtle-pulse': 'subtle-pulse 2s infinite',
+                        'fade-in': 'fade-in 0.5s ease-out',
+                        'slide-up': 'slide-up 0.5s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                        'breathe': 'breathe 4s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        'subtle-pulse': {
+                            '0%, 100%': { boxShadow: '0 4px 12px rgba(255, 107, 107, 0.4)' },
+                            '50%': { boxShadow: '0 6px 20px rgba(255, 107, 107, 0.6)' }
+                        },
+                        'fade-in': {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        'slide-up': {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        'breathe': {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.1)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Work+Sans:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body class="font-body bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+
+    <!-- Theme Toggle Button (Fixed) -->
+    <button id="theme-toggle"
+        class="fixed top-4 right-4 z-50 p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+        aria-label="Toggle theme">
+        <i data-lucide="sun" class="w-5 h-5 text-yellow-500 hidden dark:block"></i>
+        <i data-lucide="moon" class="w-5 h-5 text-gray-700 dark:hidden"></i>
+    </button>
+
+    <!-- Navigation (if logged in) -->
+    {% if session.user %}
+    <nav class="bg-white dark:bg-gray-800 shadow-md fixed top-0 left-0 right-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="{{ url_for('dashboard') }}" class="flex items-center space-x-2 group">
+                    <i class="bi bi-compass-fill text-sky-500 text-2xl group-hover:rotate-12 transition-transform"></i>
+                    <span
+                        class="text-xl font-bold bg-gradient-to-r from-primary-teal to-secondary-lavender bg-clip-text text-transparent">Neuro-Nav</span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="{{ url_for('dashboard') }}" class="nav-link">Dashboard</a>
+                    <a href="{{ url_for('routes') }}" class="nav-link">Routes</a>
+                    <a href="{{ url_for('safe_havens') }}" class="nav-link">Safe Havens</a>
+                    <a href="{{ url_for('community') }}" class="nav-link">Community</a>
+                    <div class="flex items-center space-x-4">
+                        <div class="relative group z-50">
+                            <button class="flex items-center space-x-2 focus:outline-none">
+                                {% if session.get('user').picture %}
+                                <img src="{{ session.get('user').picture }}" alt="User"
+                                    class="w-10 h-10 rounded-full border-2 border-primary-teal">
+                                {% else %}
+                                <div
+                                    class="w-10 h-10 rounded-full bg-gradient-to-r from-primary-teal to-secondary-lavender flex items-center justify-center text-white font-bold">
+                                    {{ session.get('user').name[0] if session.get('user').name else 'U' }}
+                                </div>
+                                {% endif %}
+                                <span class="font-medium hidden md:block text-gray-700 dark:text-gray-200">{{
+                                    session.get('user').name.split()[0] }}</span>
+                                <i data-lucide="chevron-down" class="w-4 h-4 text-gray-500"></i>
+                            </button>
+
+                            <!-- Dropdown Menu -->
+                            <div
+                                class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right">
+                                <div class="px-4 py-2 border-b border-gray-100 dark:border-gray-700">
+                                    <p class="text-sm font-bold text-gray-900 dark:text-white truncate">{{
+                                        session.get('user').name }}</p>
+                                    <p class="text-xs text-gray-500 truncate">{{ session.get('user').email }}</p>
+                                </div>
+                                <a href="{{ url_for('profile') }}" class="dropdown-item">
+                                    <i data-lucide="user" class="w-4 h-4"></i>
+                                    <span>My Profile</span>
+                                </a>
+                                <a href="{{ url_for('profile') }}" class="dropdown-item">
+                                    <i data-lucide="settings" class="w-4 h-4"></i>
+                                    <span>Preferences</span>
+                                </a>
+                                <div class="border-t border-gray-100 dark:border-gray-700 my-1"></div>
+                                <a href="{{ url_for('logout') }}"
+                                    class="dropdown-item text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20">
+                                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-button"
+                        class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t dark:border-gray-700">
+                <div class="px-4 py-3 space-y-2">
+                    <a href="{{ url_for('dashboard') }}" class="mobile-nav-link">Dashboard</a>
+                    <a href="{{ url_for('routes') }}" class="mobile-nav-link">Routes</a>
+                    <a href="{{ url_for('safe_havens') }}" class="mobile-nav-link">Safe Havens</a>
+                    <a href="{{ url_for('community') }}" class="mobile-nav-link">Community</a>
+                    <a href="{{ url_for('profile') }}" class="mobile-nav-link">Profile</a>
+                    <a href="{{ url_for('history') }}" class="mobile-nav-link">History</a>
+                    <a href="{{ url_for('logout') }}" class="mobile-nav-link text-red-600 dark:text-red-400">Logout</a>
+                </div>
+            </div>
+    </nav>
+    {% endif %}
+
+    <!-- Main Content -->
+    <main class="{% if session.user %}pt-16{% endif %} min-h-screen">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Panic Button (Always Visible When Logged In) -->
+    {% if session.user and request.endpoint != 'panic' %}
+    <a href="{{ url_for('panic') }}"
+        class="fixed bottom-6 right-6 z-50 w-16 h-16 bg-gradient-to-br from-danger-rose to-secondary-pink hover:shadow-2xl rounded-full flex items-center justify-center text-white text-2xl animate-subtle-pulse transition-all duration-300 hover:scale-110"
+        style="box-shadow: 0 8px 30px rgba(244, 63, 94, 0.5);" aria-label="Panic Mode">
+        🆘
+    </a>
+    {% endif %}
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="fixed bottom-24 right-6 z-50 space-y-2"></div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Main JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    </script>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+
+</html>

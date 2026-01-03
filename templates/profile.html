@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile - Neuro-Nav{% endblock %}
+
+{% block content %}
+<div class="py-8 px-4">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <h1 class="text-3xl font-bold mb-8 text-gray-900 dark:text-white">My Profile</h1>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Left Column: User Info & Actions -->
+            <div class="space-y-6">
+                <!-- User Card -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
+                    <div class="relative w-24 h-24 mx-auto mb-4">
+                        {% if user.picture %}
+                        <img src="{{ user.picture }}" alt="Profile"
+                            class="w-full h-full rounded-full object-cover border-4 border-primary-sky">
+                        {% else %}
+                        <div
+                            class="w-full h-full rounded-full bg-gradient-to-br from-primary-sky to-accent-purple flex items-center justify-center text-3xl font-bold text-white">
+                            {{ user.name[0] if user.name else 'U' }}
+                        </div>
+                        {% endif %}
+                        <div class="absolute bottom-0 right-0 w-6 h-6 bg-green-500 rounded-full border-2 border-white dark:border-gray-800"
+                            title="Online"></div>
+                    </div>
+
+                    <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-1">{{ user.name }}</h2>
+                    <p class="text-sm text-gray-500 mb-4">{{ user.email }}</p>
+
+                    <a href="{{ url_for('logout') }}"
+                        class="btn btn-outline w-full border-red-200 text-red-500 hover:bg-red-50 hover:border-red-300">
+                        <i data-lucide="log-out" class="w-4 h-4 mr-2"></i>
+                        Sign Out
+                    </a>
+                </div>
+
+                <!-- Data Export -->
+                <div
+                    class="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg p-6 text-white relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h3 class="font-bold text-lg mb-2 flex items-center">
+                            <i data-lucide="download" class="w-5 h-5 mr-2"></i>
+                            Your Data
+                        </h3>
+                        <p class="text-indigo-100 text-sm mb-4">
+                            Download a report of your sensory preferences and calm routes history.
+                        </p>
+                        <a href="/api/export-data"
+                            class="btn bg-white/20 hover:bg-white/30 text-white w-full border-0 backdrop-blur-sm transition-all">
+                            Export to DOCX
+                        </a>
+                    </div>
+                    <!-- Decorator -->
+                    <div class="absolute -bottom-6 -right-6 text-white/10">
+                        <i data-lucide="file-text" class="w-32 h-32"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Settings Form -->
+            <div class="md:col-span-2">
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">Preferences</h3>
+                        <span class="text-xs font-medium px-2 py-1 bg-green-100 text-green-700 rounded-full">
+                            Auto-saved
+                        </span>
+                    </div>
+
+                    <form id="preferences-form" class="space-y-8">
+                        <!-- Sensitivities -->
+                        <div>
+                            <label
+                                class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-4 uppercase tracking-wider">
+                                Sensory Sensitivities
+                            </label>
+                            <div class="space-y-3">
+                                {% set sensitivities = preferences.sensitivities if preferences else [] %}
+
+                                <label
+                                    class="flex items-center justify-between p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                    <span class="flex items-center text-gray-700 dark:text-gray-200">
+                                        <span class="text-xl w-8">🔊</span> Loud Noises
+                                    </span>
+                                    <label class="toggle-switch scale-90">
+                                        <input type="checkbox" name="sensitivity-noise" {% if 'noise' in sensitivities
+                                            %}checked{% endif %}>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </label>
+
+                                <label
+                                    class="flex items-center justify-between p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                    <span class="flex items-center text-gray-700 dark:text-gray-200">
+                                        <span class="text-xl w-8">💡</span> Bright Lights
+                                    </span>
+                                    <label class="toggle-switch scale-90">
+                                        <input type="checkbox" name="sensitivity-lights" {% if 'lights' in sensitivities
+                                            %}checked{% endif %}>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </label>
+
+                                <label
+                                    class="flex items-center justify-between p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                    <span class="flex items-center text-gray-700 dark:text-gray-200">
+                                        <span class="text-xl w-8">👥</span> Crowds
+                                    </span>
+                                    <label class="toggle-switch scale-90">
+                                        <input type="checkbox" name="sensitivity-crowds" {% if 'crowds' in sensitivities
+                                            %}checked{% endif %}>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Safe Havens -->
+                        <div>
+                            <label
+                                class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-4 uppercase tracking-wider">
+                                Preferred Sanctuaries
+                            </label>
+                            <div class="grid grid-cols-2 gap-3">
+                                {% set havens = preferences.safeHavens if preferences else [] %}
+
+                                <label class="haven-option">
+                                    <input type="checkbox" name="haven-parks" class="hidden haven-checkbox" {%
+                                        if 'parks' in havens %}checked{% endif %}>
+                                    <div
+                                        class="haven-card-select p-4 text-center border rounded-lg hover:border-primary-sky cursor-pointer transition-all">
+                                        <span class="text-2xl block mb-1">🌳</span>
+                                        <span class="text-sm font-medium">Parks</span>
+                                    </div>
+                                </label>
+
+                                <label class="haven-option">
+                                    <input type="checkbox" name="haven-libraries" class="hidden haven-checkbox" {%
+                                        if 'libraries' in havens %}checked{% endif %}>
+                                    <div
+                                        class="haven-card-select p-4 text-center border rounded-lg hover:border-primary-sky cursor-pointer transition-all">
+                                        <span class="text-2xl block mb-1">📚</span>
+                                        <span class="text-sm font-medium">Libraries</span>
+                                    </div>
+                                </label>
+
+                                <label class="haven-option">
+                                    <input type="checkbox" name="haven-cafes" class="hidden haven-checkbox" {%
+                                        if 'cafes' in havens %}checked{% endif %}>
+                                    <div
+                                        class="haven-card-select p-4 text-center border rounded-lg hover:border-primary-sky cursor-pointer transition-all">
+                                        <span class="text-2xl block mb-1">☕</span>
+                                        <span class="text-sm font-medium">Cafes</span>
+                                    </div>
+                                </label>
+
+                                <label class="haven-option">
+                                    <input type="checkbox" name="haven-museums" class="hidden haven-checkbox" {%
+                                        if 'museums' in havens %}checked{% endif %}>
+                                    <div
+                                        class="haven-card-select p-4 text-center border rounded-lg hover:border-primary-sky cursor-pointer transition-all">
+                                        <span class="text-2xl block mb-1">🏛️</span>
+                                        <span class="text-sm font-medium">Museums</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Emergency Contact -->
+                        <div>
+                            <label
+                                class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-4 uppercase tracking-wider">
+                                Emergency Contact
+                            </label>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-xs text-gray-500 mb-1 block">Name</label>
+                                    <input type="text" name="emergency-name" class="input"
+                                        value="{{ preferences.emergencyContact.name if preferences and preferences.emergencyContact else '' }}"
+                                        placeholder="Name">
+                                </div>
+                                <div>
+                                    <label class="text-xs text-gray-500 mb-1 block">Phone</label>
+                                    <input type="tel" name="emergency-phone" class="input"
+                                        value="{{ preferences.emergencyContact.phone if preferences and preferences.emergencyContact else '' }}"
+                                        placeholder="Phone">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 flex justify-end">
+                            <button type="submit" class="btn btn-primary">
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+    .haven-checkbox:checked+.haven-card-select {
+        background-color: rgba(14, 165, 233, 0.1);
+        border-color: #0EA5E9;
+    }
+</style>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    document.getElementById('preferences-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'Saving...';
+        submitBtn.disabled = true;
+
+        const formData = new FormData(e.target);
+
+        const preferences = {
+            sensitivities: [],
+            safeHavens: [],
+            emergencyContact: {
+                name: formData.get('emergency-name'),
+                phone: formData.get('emergency-phone')
+            }
+        };
+
+        // Collect checkboxes
+        ['noise', 'lights', 'crowds'].forEach(s => {
+            if (formData.get(`sensitivity-${s}`)) preferences.sensitivities.push(s);
+        });
+
+        ['parks', 'libraries', 'cafes', 'museums'].forEach(h => {
+            if (formData.get(`haven-${h}`)) preferences.safeHavens.push(h);
+        });
+
+        try {
+            const response = await fetch('/api/update-preferences', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(preferences)
+            });
+
+            if (response.ok) {
+                NeuroNav.showToast('Preferences updated!', 'success');
+            } else {
+                throw new Error('Update failed');
+            }
+        } catch (error) {
+            NeuroNav.showToast('Failed to save settings', 'error');
+            console.error(error);
+        } finally {
+            submitBtn.innerHTML = 'Saved!';
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,541 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Neuro-Nav{% endblock %}
+
+{% block content %}
+<!-- Background Animations -->
+<div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+    <div class="hero-blob hero-blob-3"></div>
+</div>
+
+<div class="py-8 px-4 relative">
+    <div class="max-w-7xl mx-auto">
+        <!-- Welcome Header -->
+        <div
+            class="mb-8 animate-fade-in flex flex-col md:flex-row justify-between items-center bg-white/40 dark:bg-gray-800/40 backdrop-blur-md rounded-2xl p-6 border border-white/20 shadow-lg">
+            <div>
+                <h1
+                    class="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-sky-dark to-accent-purple-dark mb-2">
+                    Good {{ 'Morning' if hour < 12 else ('Afternoon' if hour < 18 else 'Evening' ) }}, {{
+                        user.name.split()[0] if user.name else 'Friend' }}! 🌤️ </h1>
+                        <p class="text-gray-700 dark:text-gray-300 flex items-center font-medium">
+                            <i data-lucide="map-pin" class="w-4 h-4 mr-2 text-primary-sky"></i>
+                            <span id="current-location">Locating you...</span>
+                        </p>
+            </div>
+            <!-- Spotify Widget -->
+            <div class="mt-4 md:mt-0 w-full md:w-auto">
+                <iframe style="border-radius:12px"
+                    src="https://open.spotify.com/embed/playlist/37i9dQZF1DWZqd5JICZI0u?utm_source=generator&theme=0"
+                    width="100%" height="80" frameBorder="0" allowfullscreen=""
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"
+                    class="shadow-lg"></iframe>
+            </div>
+        </div>
+
+        <!-- Calm Score Card -->
+        <div
+            class="glassmorphic-card p-6 mb-8 bg-gradient-to-br from-primary-sky/90 via-secondary-pink/90 to-accent-purple/90 text-white animate-slide-up shadow-2xl relative overflow-hidden group">
+            <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                <i data-lucide="wind" class="w-32 h-32"></i>
+            </div>
+            <div class="flex flex-col md:flex-row items-center justify-between relative z-10">
+                <div class="mb-4 md:mb-0">
+                    <h2 class="text-2xl font-bold mb-1">Current Area Calm Score</h2>
+                    <p class="text-white text-opacity-90 font-medium">✨ Real-time sensory analysis</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-7xl font-black mb-2 drop-shadow-md" id="calm-score-value">--</div>
+                    <div
+                        class="flex items-center justify-center space-x-2 bg-white/20 px-4 py-1 rounded-full backdrop-blur-sm">
+                        <span class="text-sm font-bold" id="calm-score-status">Analyzing...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 grid grid-cols-3 gap-4 text-sm border-t border-white/20 pt-4">
+                <div class="text-center">
+                    <div class="text-white text-opacity-75 mb-1">Noise Level</div>
+                    <div class="font-bold text-lg" id="noise-level">--</div>
+                </div>
+                <div class="text-center border-l border-white/20">
+                    <div class="text-white text-opacity-75 mb-1">Crowd Destiny</div>
+                    <div class="font-bold text-lg" id="crowd-density">--</div>
+                </div>
+                <div class="text-center border-l border-white/20">
+                    <div class="text-white text-opacity-75 mb-1">Lighting</div>
+                    <div class="font-bold text-lg" id="lighting">Natural</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="mb-8">
+            <h3 class="text-xl font-bold mb-4 text-gray-900 dark:text-white flex items-center">
+                <i data-lucide="zap" class="w-5 h-5 mr-2 text-yellow-500"></i>
+                Quick Actions
+            </h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <a href="{{ url_for('routes') }}"
+                    class="glass-card hover:bg-white/90 p-6 group text-center rounded-xl cursor-pointer">
+                    <div class="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">🗺️</div>
+                    <h4 class="font-bold text-gray-900 dark:text-white mb-1">Plan Route</h4>
+                    <p class="text-xs text-gray-500 font-medium">Find calm paths</p>
+                </a>
+
+                <a href="{{ url_for('panic') }}"
+                    class="glass-card bg-red-50 hover:bg-red-100/90 p-6 group text-center rounded-xl cursor-pointer border-red-200">
+                    <div class="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">🆘</div>
+                    <h4 class="font-bold text-gray-900 dark:text-white mb-1">Panic Mode</h4>
+                    <p class="text-xs text-red-500 font-medium">Immediate help</p>
+                </a>
+
+                <a href="{{ url_for('safe_havens') }}"
+                    class="glass-card hover:bg-white/90 p-6 group text-center rounded-xl cursor-pointer">
+                    <div class="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">🌳</div>
+                    <h4 class="font-bold text-gray-900 dark:text-white mb-1">Safe Havens</h4>
+                    <p class="text-xs text-gray-500 font-medium">Quiet spaces nearby</p>
+                </a>
+
+                <a href="{{ url_for('community') }}"
+                    class="glass-card hover:bg-white/90 p-6 group text-center rounded-xl cursor-pointer">
+                    <div class="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">📸</div>
+                    <h4 class="font-bold text-gray-900 dark:text-white mb-1">Report</h4>
+                    <p class="text-xs text-gray-500 font-medium">Help the community</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid lg:grid-cols-3 gap-8">
+            <!-- Left Column: Route Planner & Map -->
+            <div class="lg:col-span-2 space-y-8">
+                <!-- Quick Route Planner -->
+                <div class="glass-card p-6 rounded-2xl">
+                    <h3 class="text-2xl font-bold mb-4 text-gray-900 dark:text-white flex items-center">
+                        <i data-lucide="navigation" class="w-6 h-6 mr-2 text-primary-sky"></i>
+                        Where to next?
+                    </h3>
+
+                    <form id="quick-route-form" class="space-y-4">
+                        <div>
+                            <div class="relative group">
+                                <i data-lucide="search"
+                                    class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400 group-hover:text-primary-sky transition-colors"></i>
+                                <input type="text" id="destination-input"
+                                    class="w-full pl-12 pr-4 py-4 rounded-xl border-2 border-gray-100 focus:border-primary-sky focus:ring-4 focus:ring-primary-sky/10 transition-all bg-gray-50/50 backdrop-blur-sm"
+                                    placeholder="Search for a calm place..." required>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <button type="submit" class="btn btn-primary flex-1 shadow-lg shadow-primary-sky/30">
+                                <i data-lucide="sparkles" class="w-5 h-5 mr-2"></i>
+                                Find Calm Routes
+                            </button>
+                            <button type="button" id="use-current-location" class="btn btn-outline hover:bg-gray-100">
+                                <i data-lucide="crosshair" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Live Map -->
+                <div class="glass-card p-1 rounded-2xl overflow-hidden shadow-xl">
+                    <div class="px-5 py-4 border-b border-gray-100 flex justify-between items-center bg-white/50">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white flex items-center">
+                            <i data-lucide="map" class="w-5 h-5 mr-2 text-primary-sky"></i>
+                            Exploration Map
+                        </h3>
+                        <span
+                            class="text-xs font-medium px-2 py-1 bg-green-100 text-green-700 rounded-full flex items-center">
+                            <span class="w-2 h-2 bg-green-500 rounded-full mr-1 animate-pulse"></span>
+                            Live
+                        </span>
+                    </div>
+                    <div class="map-container relative h-[400px]">
+                        <iframe id="map-frame"
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15000!2d0!3d0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus"
+                            loading="lazy" class="w-full h-full" referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                        <!-- Overlay gradient for premium feel -->
+                        <div class="absolute inset-0 pointer-events-none border-[6px] border-white/50 rounded-xl"></div>
+                    </div>
+                </div>
+
+                <!-- Recent Routes -->
+                <div class="glass-card p-6 rounded-2xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white flex items-center">
+                            <i data-lucide="history" class="w-5 h-5 mr-2 text-primary-sky"></i>
+                            Recent Journeys
+                        </h3>
+                        <a href="{{ url_for('history') }}"
+                            class="text-primary-sky hover:text-primary-sky-dark text-sm font-bold transition-colors">
+                            View All →
+                        </a>
+                    </div>
+
+                    <div class="space-y-3" id="recent-routes">
+                        <div class="skeleton h-20 rounded-xl"></div>
+                        <div class="skeleton h-20 rounded-xl"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Nearby Safe Havens & Stats -->
+            <div class="space-y-8">
+                <!-- Nearby Safe Havens -->
+                <div class="glass-card p-6 rounded-2xl relative overflow-hidden">
+                    <div
+                        class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-400/20 to-emerald-400/20 rounded-bl-full -mr-8 -mt-8 pointer-events-none">
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-4 text-gray-900 dark:text-white flex items-center relative z-10">
+                        <i data-lucide="leaf" class="w-5 h-5 mr-2 text-green-500"></i>
+                        Nearby Sanctuaries
+                    </h3>
+
+                    <div class="space-y-3 relative z-10" id="nearby-havens">
+                        <div class="skeleton h-24 rounded-xl"></div>
+                        <div class="skeleton h-24 rounded-xl"></div>
+                        <div class="skeleton h-24 rounded-xl"></div>
+                    </div>
+
+                    <a href="{{ url_for('safe_havens') }}"
+                        class="btn btn-outline w-full mt-4 text-sm py-2 relative z-10">
+                        Explore All Sanctuaries
+                    </a>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="glass-card p-6 rounded-2xl">
+                    <h3 class="text-xl font-bold mb-4 text-gray-900 dark:text-white flex items-center">
+                        <i data-lucide="activity" class="w-5 h-5 mr-2 text-primary-sky"></i>
+                        Wellness Stats
+                    </h3>
+
+                    <div class="space-y-4">
+                        <div
+                            class="flex items-center justify-between p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl border border-white/40">
+                            <div class="flex items-center space-x-3">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-primary-sky/20 flex items-center justify-center text-primary-sky">
+                                    <i data-lucide="footprints" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-gray-500 uppercase tracking-wide">Steps</p>
+                                    <p class="text-xl font-black text-gray-900 dark:text-white">Coming Soon</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex items-center justify-between p-4 bg-white/50 dark:bg-gray-800/50 rounded-xl border border-white/40">
+                            <div class="flex items-center space-x-3">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-secondary-pink/20 flex items-center justify-center text-secondary-pink">
+                                    <i data-lucide="heart" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-bold text-gray-500 uppercase tracking-wide">Avg Calm</p>
+                                    <p class="text-xl font-black text-gray-900 dark:text-white">High</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tips Card -->
+                <div
+                    class="glass-card p-6 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg overflow-hidden relative">
+                    <div class="absolute -bottom-10 -right-10 text-white/10">
+                        <i data-lucide="lightbulb" class="w-40 h-40"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <div class="flex items-center space-x-2 mb-2">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-yellow-300"></i>
+                            <h4 class="font-bold text-lg">Daily Insight</h4>
+                        </div>
+                        <p class="text-sm text-indigo-100 leading-relaxed font-medium">
+                            "Finding a quiet space for just 5 minutes can reduce sensory overload by up to 40%."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+
+    let userLocation = null;
+
+    // Load current location
+    async function loadCurrentLocation() {
+        try {
+            // Check if geolocation is available
+            if (!navigator.geolocation) {
+                throw new Error('Geolocation not supported');
+            }
+
+            const position = await NeuroNav.getCurrentLocation();
+            userLocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            // Update map with user location
+            updateMapLocation(userLocation.lat, userLocation.lng);
+
+            // Display coordinates
+            document.getElementById('current-location').textContent = `Near ${userLocation.lat.toFixed(3)}, ${userLocation.lng.toFixed(3)}`;
+
+            return userLocation;
+        } catch (error) {
+            console.error('Location error:', error);
+            document.getElementById('current-location').textContent = 'Location unavailable';
+
+            // Use default location (New York)
+            userLocation = { lat: 40.7128, lng: -74.0060 };
+            updateMapLocation(userLocation.lat, userLocation.lng);
+
+            NeuroNav.showToast('Using default location. Enable location services for accuracy.', 'info');
+            return userLocation;
+        }
+    }
+
+    // Update map with dynamic location
+    function updateMapLocation(lat, lng, embedUrl = null) {
+        const mapFrame = document.getElementById('map-frame');
+        if (embedUrl) {
+            mapFrame.src = embedUrl;
+        } else {
+            // Simple embed showing the area
+            mapFrame.src = `https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15000!2d${lng}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus`;
+        }
+    }
+
+    // Load calm score with geolocation
+    async function loadCalmScore() {
+        try {
+            if (!userLocation) await loadCurrentLocation();
+
+            const data = await NeuroNav.fetchAPI(`/api/current-calm-score?lat=${userLocation.lat}&lng=${userLocation.lng}`);
+            const scoreElement = document.getElementById('calm-score-value');
+            scoreElement.textContent = data.score.toFixed(1);
+
+            const statusElement = document.getElementById('calm-score-status');
+            statusElement.textContent = data.status || 'Good';
+            statusElement.className = `flex items-center justify-center space-x-2 px-4 py-1 rounded-full backdrop-blur-sm ${data.score >= 7.5 ? 'bg-green-500/20 text-green-300' : 'bg-yellow-500/20 text-yellow-300'}`;
+
+            // Update factors
+            document.getElementById('lighting').textContent = data.factors.includes('Good natural lighting') ? 'Excellent' : 'Average';
+            document.getElementById('crowd-density').textContent = data.score > 7 ? 'Low' : 'Moderate';
+            document.getElementById('noise-level').textContent = data.score > 8 ? 'Minimal' : 'Low';
+
+        } catch (error) {
+            console.error('Failed to load calm score:', error);
+            document.getElementById('calm-score-value').textContent = '--';
+        }
+    }
+
+    // Load nearby safe havens with real geolocation
+    async function loadNearbyHavens() {
+        const container = document.getElementById('nearby-havens');
+        container.innerHTML = '<div class="text-center p-4 text-gray-500">Scanning for sanctuaries...</div>';
+
+        try {
+            if (!userLocation) await loadCurrentLocation();
+
+            const havens = await NeuroNav.fetchAPI(`/api/nearby-havens?lat=${userLocation.lat}&lng=${userLocation.lng}`);
+
+            if (havens.length === 0) {
+                container.innerHTML = '<div class="text-center p-4 text-gray-500">No close sanctuaries found.</div>';
+                return;
+            }
+
+            container.innerHTML = havens.slice(0, 3).map(haven => `
+                <a href="${haven.maps_url}" target="_blank" class="block group">
+                    <div class="flex items-center space-x-3 p-3 bg-white/40 dark:bg-gray-800/40 backdrop-blur-md rounded-xl hover:bg-white/60 dark:hover:bg-gray-700/60 transition-all border border-white/20 shadow-sm relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-primary-sky/0 to-primary-sky/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        
+                        <div class="text-2xl relative z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white/50 dark:bg-gray-800/50">
+                            <i class="bi ${getHavenIcon(haven.type)} text-primary-sky"></i>
+                        </div>
+                        <div class="flex-1 min-w-0 relative z-10">
+                            <h4 class="font-bold text-gray-900 dark:text-white truncate text-sm">${haven.name}</h4>
+                            <div class="flex items-center space-x-2 text-xs text-gray-600 dark:text-gray-400 mt-0.5">
+                                <span class="flex items-center"><i class="bi bi-geo-alt-fill mr-1"></i> ${haven.distance}</span>
+                                <span>•</span>
+                                <span class="text-green-600 dark:text-green-400 font-medium">Calm: ${haven.calm_score}</span>
+                            </div>
+                        </div>
+                        <div class="relative z-10">
+                            <button class="p-2 hover:bg-white/50 rounded-full transition-colors">
+                                <i class="bi bi-arrow-right-short text-xl text-gray-400 group-hover:text-primary-sky"></i>
+                            </button>
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+
+        } catch (error) {
+            console.error('Failed to load nearby havens:', error);
+            container.innerHTML = '<div class="text-center p-4 text-red-500 text-sm">Could not reach sanctuary database.</div>';
+        }
+    }
+
+    // Load recent routes from localStorage
+    function loadRecentRoutes() {
+        const container = document.getElementById('recent-routes');
+        const routes = JSON.parse(localStorage.getItem('recent_routes') || '[]');
+
+        if (routes.length === 0) {
+            container.innerHTML = '<div class="text-center p-4 text-gray-500 text-sm">No recent journeys</div>';
+            return;
+        }
+
+        container.innerHTML = routes.slice(0, 3).map(route => `
+            <div class="flex items-center justify-between p-3 bg-white/40 dark:bg-gray-800/40 backdrop-blur-md rounded-xl hover:bg-white/60 transition-all cursor-pointer border border-white/20" onclick="viewRoute('${route.id}')">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                        <i class="bi bi-signpost-split-fill text-indigo-500 text-sm"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold text-gray-900 dark:text-white text-sm line-clamp-1">${route.to_name}</p>
+                        <p class="text-xs text-gray-500">${route.date.split(',')[0]}</p>
+                    </div>
+                </div>
+                <div class="${route.score >= 8 ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'} px-2 py-1 rounded-full text-xs font-bold">
+                    ${route.score.toFixed(1)}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function viewRoute(routeId) {
+        // Find route and restore calculation
+        const routes = JSON.parse(localStorage.getItem('recent_routes') || '[]');
+        const route = routes.find(r => r.id == routeId);
+        if (route) {
+            localStorage.setItem('current_route_calculation', JSON.stringify(route));
+            window.location.href = `{{ url_for('routes') }}`;
+        }
+    }
+
+    function getHavenIcon(type) {
+        const icons = {
+            park: 'bi-tree-fill',
+            library: 'bi-book-fill',
+            cafe: 'bi-cup-hot-fill',
+            museum: 'bi-building-fill',
+            garden: 'bi-flower1',
+            default: 'bi-geo-fill'
+        };
+        return icons[type] || icons.default;
+    }
+
+    // Quick route form submission
+    document.getElementById('quick-route-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const destination = document.getElementById('destination-input').value;
+
+        if (!destination) {
+            NeuroNav.showToast('Please enter a destination', 'warning');
+            return;
+        }
+
+        try {
+            if (!userLocation) await loadCurrentLocation();
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="animate-spin">⏳</span> Finding Path...';
+            submitBtn.disabled = true;
+
+            // Search for destination
+            const searchResults = await NeuroNav.fetchAPI(
+                `/api/search-places?query=${encodeURIComponent(destination)}&lat=${userLocation.lat}&lng=${userLocation.lng}`
+            );
+
+            if (searchResults.length === 0) {
+                NeuroNav.showToast('Destination not found. Try a different search.', 'error');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                return;
+            }
+
+            const destPlace = searchResults[0];
+
+            // Calculate routes
+            const response = await fetch('/api/calculate-route', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    origin: { lat: userLocation.lat, lng: userLocation.lng },
+                    destination: { lat: destPlace.lat, lng: destPlace.lng },
+                    preferences: { avoid_crowds: true }
+                })
+            });
+
+            const routes = await response.json();
+
+            // Update the embedded map immediately!
+            if (routes && routes.length > 0 && routes[0].embed_url) {
+                updateMapLocation(null, null, routes[0].embed_url);
+                NeuroNav.showToast('Route calculated! Showing on map.', 'success');
+            }
+
+            // Save for persistence/routes page
+            const routeData = {
+                id: Date.now(),
+                from_name: 'Current Location',
+                to_name: destPlace.name,
+                date: new Date().toLocaleString(),
+                score: routes[0].calm_score,
+                routes: routes
+            };
+
+            const recentRoutes = JSON.parse(localStorage.getItem('recent_routes') || '[]');
+            recentRoutes.unshift(routeData);
+            localStorage.setItem('recent_routes', JSON.stringify(recentRoutes.slice(0, 10)));
+            loadRecentRoutes();
+
+            // Reset button
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+
+        } catch (error) {
+            console.error('Route calculation error:', error);
+            NeuroNav.showToast('Failed to calculate route. Please try again.', 'error');
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
+    });
+
+    // Initialize all dashboard components
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            // Load location first
+            await loadCurrentLocation();
+
+            // Load other data
+            loadCalmScore();
+            loadNearbyHavens();
+            loadRecentRoutes();
+
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        } catch (error) {
+            console.error('Dashboard init error:', error);
+        }
+    });
+
+</script>
+{% endblock %}

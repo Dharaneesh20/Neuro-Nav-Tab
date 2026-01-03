@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Neuro-Nav{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center px-4 py-12">
+    <div class="max-w-2xl w-full">
+        <!-- Onboarding Container -->
+        <div class="card p-8" id="onboarding-container">
+            <!-- Progress Bar -->
+            <div class="mb-8">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Step <span id="current-step">1</span> of 3</span>
+                    <span class="text-sm font-medium text-primary-teal" id="progress-percent">33%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill" style="width: 33%"></div>
+                </div>
+            </div>
+            
+            <!-- Step 1: Understanding -->
+            <div class="onboarding-step" id="step-1">
+                <div class="text-center mb-8">
+                    <div class="text-6xl mb-4 animate-float">🧠</div>
+                    <h2 class="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+                        Understanding Your Needs
+                    </h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto">
+                        We understand that crowded spaces, loud noises, and overwhelming environments can feel challenging. 
+                        That's why we created Neuro-Nav.
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="text-center p-4">
+                        <div class="text-4xl mb-2">🔊</div>
+                        <p class="text-gray-600 dark:text-gray-400">Avoid loud areas</p>
+                    </div>
+                    <div class="text-center p-4">
+                        <div class="text-4xl mb-2">👥</div>
+                        <p class="text-gray-600 dark:text-gray-400">Skip crowded places</p>
+                    </div>
+                    <div class="text-center p-4">
+                        <div class="text-4xl mb-2">💡</div>
+                        <p class="text-gray-600 dark:text-gray-400">Find calm routes</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 2: How It Works -->
+            <div class="onboarding-step hidden" id="step-2">
+                <div class="text-center mb-8">
+                    <div class="text-6xl mb-4 animate-float">🗺️</div>
+                    <h2 class="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+                        How Neuro-Nav Works
+                    </h2>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="flex items-start space-x-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-r from-primary-teal to-primary-teal-dark flex items-center justify-center text-white font-bold">
+                            1
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 dark:text-white mb-1">📊 Real-time Sensory Data</h3>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                We analyze noise levels, crowd density, and lighting conditions in real-time
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-r from-secondary-lavender to-secondary-lavender-dark flex items-center justify-center text-white font-bold">
+                            2
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 dark:text-white mb-1">🛣️ Calm Route Alternatives</h3>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                Get multiple route options with calm scores to choose what feels right
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4 p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-r from-success-green to-green-500 flex items-center justify-center text-white font-bold">
+                            3
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 dark:text-white mb-1">🆘 Instant Panic Assistance</h3>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                One tap finds the nearest quiet space with guided breathing exercises
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 3: Privacy -->
+            <div class="onboarding-step hidden" id="step-3">
+                <div class="text-center mb-8">
+                    <div class="text-6xl mb-4 animate-float">🔒</div>
+                    <h2 class="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+                        Your Privacy Matters
+                    </h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto mb-6">
+                        We take your privacy seriously. Here's what you should know:
+                    </p>
+                </div>
+                
+                <div class="space-y-4 max-w-lg mx-auto">
+                    <div class="flex items-start space-x-3 p-4 rounded-lg bg-green-50 dark:bg-green-900 dark:bg-opacity-20">
+                        <i data-lucide="check-circle" class="w-6 h-6 text-success-green flex-shrink-0"></i>
+                        <div>
+                            <h4 class="font-bold text-gray-900 dark:text-white mb-1">Location Data Stays Private</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                Your location is never stored or shared with third parties
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-3 p-4 rounded-lg bg-green-50 dark:bg-green-900 dark:bg-opacity-20">
+                        <i data-lucide="check-circle" class="w-6 h-6 text-success-green flex-shrink-0"></i>
+                        <div>
+                            <h4 class="font-bold text-gray-900 dark:text-white mb-1">Anonymous Contributions</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                Community reports are completely anonymous by default
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-3 p-4 rounded-lg bg-green-50 dark:bg-green-900 dark:bg-opacity-20">
+                        <i data-lucide="check-circle" class="w-6 h-6 text-success-green flex-shrink-0"></i>
+                        <div>
+                            <h4 class="font-bold text-gray-900 dark:text-white mb-1">You Control Sharing</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                Choose what you share and with whom, always
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation Buttons -->
+            <div class="flex justify-between items-center mt-8 pt-6 border-t dark:border-gray-700">
+                <button id="back-btn" class="btn btn-outline opacity-0 pointer-events-none" disabled>
+                    <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+                    Back
+                </button>
+                
+                <div class="flex space-x-2">
+                    <div class="w-2 h-2 rounded-full bg-primary-teal step-indicator" data-step="1"></div>
+                    <div class="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 step-indicator" data-step="2"></div>
+                    <div class="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 step-indicator" data-step="3"></div>
+                </div>
+                
+                <button id="next-btn" class="btn btn-primary">
+                    Next
+                    <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    let currentStep = 1;
+    const totalSteps = 3;
+    
+    const backBtn = document.getElementById('back-btn');
+    const nextBtn = document.getElementById('next-btn');
+    
+    function updateStep(newStep) {
+        // Hide current step
+        document.getElementById(`step-${currentStep}`).classList.add('hidden');
+        
+        // Show new step
+        currentStep = newStep;
+        document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+        
+        // Update progress
+        const progress = (currentStep / totalSteps) * 100;
+        document.getElementById('progress-fill').style.width = `${progress}%`;
+        document.getElementById('current-step').textContent = currentStep;
+        document.getElementById('progress-percent').textContent = `${Math.round(progress)}%`;
+        
+        // Update indicators
+        document.querySelectorAll('.step-indicator').forEach((indicator, index) => {
+            if (index < currentStep) {
+                indicator.classList.remove('bg-gray-300', 'dark:bg-gray-600');
+                indicator.classList.add('bg-primary-teal');
+            } else {
+                indicator.classList.remove('bg-primary-teal');
+                indicator.classList.add('bg-gray-300', 'dark:bg-gray-600');
+            }
+        });
+        
+        // Update button visibility
+        if (currentStep === 1) {
+            backBtn.classList.add('opacity-0', 'pointer-events-none');
+            backBtn.disabled = true;
+        } else {
+            backBtn.classList.remove('opacity-0', 'pointer-events-none');
+            backBtn.disabled = false;
+        }
+        
+        // Update next button text
+        if (currentStep === totalSteps) {
+            nextBtn.innerHTML = 'Create Profile <i data-lucide="check" class="w-4 h-4 ml-2"></i>';
+        } else {
+            nextBtn.innerHTML = 'Next <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>';
+        }
+        
+        // Reinitialize icons
+        lucide.createIcons();
+        
+        // Add animation
+        document.getElementById(`step-${currentStep}`).classList.add('animate-fade-in');
+    }
+    
+    backBtn.addEventListener('click', () => {
+        if (currentStep > 1) {
+            updateStep(currentStep - 1);
+        }
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        if (currentStep < totalSteps) {
+            updateStep(currentStep + 1);
+        } else {
+            // Final step - go to profile setup
+            window.location.href = "{{ url_for('profile_setup') }}";
+        }
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' && currentStep < totalSteps) {
+            updateStep(currentStep + 1);
+        } else if (e.key === 'ArrowLeft' && currentStep > 1) {
+            updateStep(currentStep - 1);
+        }
+    });
+</script>
+{% endblock %}
