@@ -1,4 +1,4 @@
-# 🧠 Neuro-Nav - Flask Edition
+# 🧠 Neuro-Nav - Tablet/Ipad Edition
 
 **Calm Navigation for Neurodivergent Individuals**
 
